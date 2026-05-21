@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set permissions
+        run: chmod +x start.sh tests/*.sh
+
+      - name: Run security test
+        run: ./tests/security_start.sh
+
+      - name: Run functional test
+        run: ./tests/test_start.sh
+
+      # (facoltativo ma consigliato)
+#     - name: Test Docker base build
+#       run: docker build -f docker/Dockerfile.base -t test-image .
